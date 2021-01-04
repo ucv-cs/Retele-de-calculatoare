@@ -1,0 +1,31 @@
+Aplicația este compusă dintr-un script pentru server și unul pentru client.
+
+1. Serverul
+Pentru a satisface cerința privind posibilitatea de conectare simultană a doi
+clienți, scriptul pentru server este multithreaded, creând câte un thread
+pentru fiecare client care se conectează.
+Pentru threaduri am folosit modulul _thread, nu threading, întrucât scenariul
+aplicației este unul simplu în care era suficientă metoda start_new_thread().
+Altfel, crearea unui thread folosind modulul threading implica derivarea unei
+clase Thread (https://www.tutorialspoint.com/python/python_multithreading.htm).
+
+La rulare scriptul crează un server care ascultă conexiuni de la orice adresă
+pe portul 8001. Odată conectat un client, se crează un thread pentru el în care
+va fi executată funcția client(), se verifică mesajul așteptat pentru pornire
+(START) și se așteaptă inputul clientului.
+În cazul unui input nevalid (ex. non-numeric), clientul este notificat să intro-
+ducă inputul în formatul corect.
+Inputul clientului este afișat pe server alături de adresa și portul său.
+În cazul unei erori la client, a tastării comenzii exit, a închiderii clientului
+sau a ghicirii numărului, serverul va afișa un mesaj despre deconectare.
+
+2. Clientul
+La rulare scriptul crează un socket și încearcă o conexiune la server prin portul
+8001. Utilizatorul este informat despre ce input se așteaptă de la el pentru în-
+ceperea și continuarea jocului. Mesajele introduse sunt trimise la server, iar
+răspunsurile acestuia, conform specificațiilor problemei, sunt afișate pe ecran.
+Dacă vreun răspuns al serverului conține textul "GHICIT", jocul se oprește pentru
+client, conexiunea se închide, iar scriptul încetează execuția.
+
+Același script poate fi rulat simultan de mai multe ori, astfel încât să fie în-
+deplinită cerința problemei.
