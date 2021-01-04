@@ -6,7 +6,7 @@ Client pentru problema "Ghicește cifrul"
 
 import socket
 
-print("Ghiceșete cifrul [1.02]\nClientul este pornit.\n")
+print("Ghicește cifrul [1.02]\nClientul este pornit.\n")
 client = socket.socket()
 server = input("Scrie adresa serverului: ")
 port = 8001

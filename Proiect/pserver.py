@@ -98,7 +98,7 @@ except socket.error as e:
 	exit()
 
 server.listen(5)
-print(f"Ghiceșete cifrul [1.02]\nServerul este pornit.\n\
+print(f"Ghicește cifrul [1.02]\nServerul este pornit.\n\
 Conexiunile sunt așteptate la adresa: {server_ip}") #:{port}
 
 while True:
