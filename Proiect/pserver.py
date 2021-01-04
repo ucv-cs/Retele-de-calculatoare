@@ -8,23 +8,27 @@ import socket
 import random
 from _thread import *
 
-server = socket.socket()
-host = "0.0.0.0"
-port = 8001
-thread_count = 0
-buffer_size = 2048
+def get_ip():
+	"""
+	Află adresa IP cu ruta implicită pe care rulează serverul.
+	Sursa: https://stackoverflow.com/a/28950776
 
-try:
-	server.bind((host, port))
-except socket.error as e:
-	print(str(e))
-
-server.listen(5)
-print("Serverul este pornit.")
+		@returns ip
+	"""
+	server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	try:
+		# doesn't even have to be reachable
+		server.connect(('10.255.255.255', 1))
+		ip = server.getsockname()[0]
+	except Exception:
+		ip = '127.0.0.1'
+	finally:
+		server.close()
+	return ip
 
 def client(connection, address):
 	"""
-	Gestionează conexiunea unui client în timpul jocului
+	Gestionează conexiunea unui client în timpul jocului.
 
 		@param connection
 		@param address
@@ -40,11 +44,12 @@ def client(connection, address):
 
 			if data.decode() == "START" or started:
 				started = True
+				message = ""
 
 				if attempt_count == 0:
 					message = "GHICEȘTE!"
 				elif message == "exit" or not data:
-					raise
+					raise()
 				else:
 					message = test(data.decode(), cipher, attempt_count)
 
@@ -59,7 +64,7 @@ def client(connection, address):
 
 def test(input, cipher, attempt_count):
 	"""
-	Validează inputul și returnează răspunsuri ca string
+	Validează inputul și returnează răspunsuri ca string.
 
 		@param input
 		@param cipher
@@ -78,6 +83,23 @@ def test(input, cipher, attempt_count):
 			return f"AI GHICIT din {attempt_count} încercări!"
 	except:
 		return "Trebuie să scrii un întreg cuprins între 1 și 100."
+
+server = socket.socket()
+server_ip = get_ip()
+host = "0.0.0.0"
+port = 8001
+thread_count = 0
+buffer_size = 2048
+
+try:
+	server.bind((host, port))
+except socket.error as e:
+	print(str(e))
+	exit()
+
+server.listen(5)
+print(f"Ghiceșete cifrul [1.02]\nServerul este pornit.\n\
+Conexiunile sunt așteptate la adresa: {server_ip}") #:{port}
 
 while True:
 	connection, address = server.accept()

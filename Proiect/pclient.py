@@ -6,15 +6,17 @@ Client pentru problema "Ghicește cifrul"
 
 import socket
 
+print("Ghiceșete cifrul [1.02]\nClientul este pornit.\n")
 client = socket.socket()
-host = socket.gethostname()
+server = input("Scrie adresa serverului: ")
 port = 8001
 buffer_size = 2048
 
 try:
-	client.connect((host, port))
+	client.connect((server, port))
 except socket.error as e:
 	print(str(e))
+	exit()
 
 message = input("Scrie START pentru a începe: ")
 
