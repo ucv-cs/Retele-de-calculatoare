@@ -98,7 +98,7 @@ except socket.error as e:
 
 server.listen(5)
 print(f"Ghicește cifrul [1.02]\nServerul este pornit.\n\
-Conexiunile sunt așteptate la adresa: {server_ip}") #:{port}
+Conexiunile sunt așteptate la adresa: {server_ip}")
 
 while True:
 	connection, address = server.accept()
