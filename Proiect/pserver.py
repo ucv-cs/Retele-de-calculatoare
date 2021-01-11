@@ -17,7 +17,6 @@ def get_ip():
 	"""
 	server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	try:
-		# doesn't even have to be reachable
 		server.connect(('10.255.255.255', 1))
 		ip = server.getsockname()[0]
 	except Exception:
@@ -107,5 +106,3 @@ while True:
 	start_new_thread(client, (connection, address, ))
 	thread_count += 1
 	print(f"Thread #{thread_count}")
-
-server.close()
